@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <link rel="import" href="./axios.html" id="page1">
+    <title>
+        Vue
+    </title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<meta charset="utf-8">
+
+<body>
+    <div id="app">
+        <p>
+            <!-- 使用 router-link 组件来导航. -->
+            <!-- 通过传入 `to` 属性指定链接. -->
+            <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+            <router-link to="/detail">detail</router-link>
+            <router-link to="/user/1992">user</router-link>
+            <h3>{{student.age}}</h3>
+            <a @click="setStudent('age',22)">getStudent</a>
+        </p>
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+    </div>
+    
+    <script src="./js/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const user = { template: '<div>User {{ $route.params.id }}</div>' }
+        const detail = { template: '<div>详情页</div>' }
+
+        // 2. 定义路由
+        // 每个路由应该映射一个组件。 其中"component" 可以是
+        // 通过 Vue.extend() 创建的组件构造器，
+        // 或者，只是一个组件配置对象。
+        // 我们晚点再讨论嵌套路由。
+        var content = document.querySelector('link[rel="import"]').import;
+
+        console.log(content);
+        const routes = [
+            { path: '/user/:id', component: user },
+            { path: '/detail', component: detail }
+        ]
+
+        // 3. 创建 router 实例，然后传 `routes` 配置
+        // 你还可以传别的配置参数, 不过先这么简单着吧。
+        const router = new VueRouter({
+            routes // (缩写) 相当于 routes: routes
+        })
+
+        const vue = new Vue({
+            el: "#app",
+            data: {
+                student:{
+                    age:"10",
+                    name:""
+                }
+            },
+            methods: {
+                setStudent(attr,val){
+                    this.student[attr]=val;
+                }
+            },
+            router: router,
+            watch: {
+                $route(to, from) {
+                    // 对路由变化作出响应...
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

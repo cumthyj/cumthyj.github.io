@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>
+        Vue
+    </title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<meta charset="utf-8">
+
+<body>
+
+    <div id="app" style="text-align: center;">
+        <!-- {{content}}
+        <button @click="test">
+            <h2>检测</h2>
+        </button> -->
+
+        <img style="height: 200px;width: 220px;" src="./img/20201214.jpg" />
+        <div v-for="url in imgUrls">
+            <img  v-lazy="url" />
+        </div>
+    </div>
+</body>
+<script src="./js/vue.js"></script>
+<script src="./directive/lazyload.js"></script>
+<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+<script>
+
+    const vue = new Vue({
+        el: "#app",
+        data: {
+            gender: "Male",
+            question: "oldQuestion",
+            content: "",
+            imgUrls:[
+
+                    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1825933799,1197547007&fm=26&gp=0.jpg',
+                    'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2731360590,3226816949&fm=26&gp=0.jpg',
+                    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1825933799,1197547007&fm=26&gp=0.jpg',
+                    'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2731360590,3226816949&fm=26&gp=0.jpg',
+                    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1825933799,1197547007&fm=26&gp=0.jpg',
+                    'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2731360590,3226816949&fm=26&gp=0.jpg',
+                    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1825933799,1197547007&fm=26&gp=0.jpg',
+                    'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2731360590,3226816949&fm=26&gp=0.jpg',
+                ]
+        },
+        methods: {
+            test: function () {
+                const app = this;
+                axios.get("test.txt")
+                    .then(function (res) {
+                        console.log(res)
+                        app.content = res.data.replace(/somthing/g, "nothing")
+                        //app.question="newQuestion";
+
+                        //console.log(st);
+                    })
+                    .catch(function (err) {
+                        console.log("请求失败233");
+                    });
+            }
+        },
+        watch: {
+            question: {
+
+                handler(val) {
+                    console.log('handler--', val);
+                    console.log('unknown--', this.immediate);
+                    console.log('ppp-', isNaN(parseFloat('n')))
+                },
+                immediate: true
+            },
+        }
+    })
+
+
+</script>
+
+</html>

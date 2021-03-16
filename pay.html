@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+</head>
+<body style="padding:20px;">
+<a href="javascript:;" class="weui-btn weui-btn_primary" id="payBtn">微信支付</a>
+</body>
+<script>
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }
+
+    function onBridgeReady() {
+        WeixinJSBridge.call('hideOptionMenu');
+    }
+
+    $('#payBtn').on('click', function () {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    // 以下6个支付参数通过payjs的jsapi接口获取
+                    // **************************
+                    "appId": "wxc5205a653b0259ac",
+                    "timeStamp": "15100000000",
+                    "nonceStr": "9cJEu27X6KehHGM8",
+                    "package": "prepay_id=wx162234040923141245861167",
+                    "signType": "MD5",
+                    "paySign": "D64EF3ADBCA224E435D321619710C008"
+                    // **************************
+                },
+                function (res) {
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                        WeixinJSBridge.call('closeWindow');
+                    }
+                }
+        );
+    });
+</script>
